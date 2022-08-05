@@ -10,6 +10,10 @@ const routes: Routes = [
     path: '',
     component: HomepageComponent,
   },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({
@@ -24,4 +28,5 @@ const routes: Routes = [
   exports: [HomepageComponent],
   entryComponents: [],
 })
-export class HomePageModule {}
+export class HomePageModule {
+}

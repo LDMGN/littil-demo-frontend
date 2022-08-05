@@ -1,17 +1,46 @@
 <div class="p-4 bg-blue-50 flex justify-between items-center">
-  <div>Logo</div>
+  <div>
+    <img src="assets/littil_logo.png"
+         class="h-12"
+         alt="LITTIL logo">
+  </div>
   <div>
     <littil-button
       [inline]="true"
       data-test="register-btn"
       (click)="openLoginModal(LoginType.Register)"
-      >Registeren</littil-button
+    >Registeren
+    </littil-button
     >
     <littil-button
       [inline]="true"
       data-test="login-btn"
       (click)="openLoginModal(LoginType.Login)"
-      >Inloggen</littil-button
+    >Inloggen
+    </littil-button
     >
+  </div>
+</div>
+<div class="flex justify-center bg-yellow-100 w-screen">
+  <div class="flex text-white uppercase">
+    <div class="shrink-0 px-10 py-5"
+         [class.bg-yellow-50]="true">
+      <a [routerLink]="'/'">Home</a>
+    </div>
+    <div class="shrink-0 px-10 py-5">
+      <a [routerLink]="'/over-ons'">Over ons</a>
+    </div>
+    <div class="shrink-0 px-10 py-5">
+      <a [routerLink]="'/informatie'">Informatie</a>
+    </div>
+    <div class="shrink-0 px-10 py-5">
+      <a [routerLink]="'/blog'">Blog</a>
+    </div>
+    <div class="shrink-0 px-10 py-5">
+      <a [routerLink]="'/contact'">Contact</a>
+    </div>
+    <div class="shrink-0 px-10 py-5">
+      <a [routerLink]="'/devoxx4kids'">Devoxx4Kids</a>
+    </div>
   </div>
 </div>
