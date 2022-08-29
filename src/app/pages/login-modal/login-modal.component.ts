@@ -29,10 +29,15 @@ export class LoginModalComponent
     firstName: new FormControl('', Validators.required),
     surname: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
-    postalCode: new FormControl('', [
+    postalCodeNumbers: new FormControl('', [
       Validators.required,
       Validators.pattern('^[1-9][0-9]{3}$'),
     ]),
+    postalCodeLetters: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-zA-Z]{2}$'),
+    ]),
+    postalCode: new FormControl(''),
     country: new FormControl('Nederland', Validators.required),
   });
   registerSchoolForm: FormGroup = new FormGroup({
@@ -105,7 +110,9 @@ export class LoginModalComponent
       firstName: this.registerTeacherForm.controls['firstName'].value,
       surname: this.registerTeacherForm.controls['surname'].value,
       email: this.registerTeacherForm.controls['email'].value,
-      postalCode: this.registerTeacherForm.controls['postalCode'].value,
+      postalCode:
+        this.registerTeacherForm.controls['postalCodeNumbers'].value +
+        this.registerTeacherForm.controls['postalCodeLetters'].value,
       country: this.registerTeacherForm.controls['country'].value,
     };
     return firstValueFrom(this.teacherService.create(teacher))
@@ -131,6 +138,34 @@ export class LoginModalComponent
 
   public onClickCancel() {
     this.close();
+  }
+
+  public checkPostalCodeRequiredErrors(): boolean {
+    let bool =
+      (FormUtil.InValid(
+        this.registerTeacherForm.controls['postalCodeNumbers']
+      ) &&
+        FormUtil.ContainsError(
+          this.registerTeacherForm.controls['postalCodeNumbers'],
+          'required'
+        )) ||
+      (FormUtil.InValid(
+        this.registerTeacherForm.controls['postalCodeLetters']
+      ) &&
+        FormUtil.ContainsError(
+          this.registerTeacherForm.controls['postalCodeLetters'],
+          'required'
+        )) ||
+      (!FormUtil.ContainsError(
+        this.registerTeacherForm.controls['postalCodeNumbers'],
+        'pattern'
+      ) &&
+        !FormUtil.ContainsError(
+          this.registerTeacherForm.controls['postalCodeLetters'],
+          'pattern'
+        ));
+    console.log('checkPostalCodeRequiredErrors', bool);
+    return bool;
   }
 }
 

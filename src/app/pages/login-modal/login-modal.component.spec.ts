@@ -1,17 +1,18 @@
-import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { MockComponent } from 'ng-mocks';
+import { ButtonComponent } from '../../components/button/button.component';
+import { FormErrorMessageComponent } from '../../components/forms/form-error-message/form-error-message.component';
+import { FormInputPasswordComponent } from '../../components/forms/password-input/form-input-password.component';
+import { FormInputRadioComponent } from '../../components/forms/radio-input/form-input-radio.component';
+import { FormInputTextComponent } from '../../components/forms/text-input/form-input-text.component';
+import { TeacherService } from '../../services/teacher/teacher.service';
 import {
   ILoginModalInput,
   LoginModalComponent,
   LoginType,
 } from './login-modal.component';
-import { MockComponent } from 'ng-mocks';
-import { FormInputTextComponent } from '../../components/forms/text-input/form-input-text.component';
-import { FormInputPasswordComponent } from '../../components/forms/password-input/form-input-password.component';
-import { FormInputRadioComponent } from '../../components/forms/radio-input/form-input-radio.component';
-import { ButtonComponent } from '../../components/button/button.component';
-import {TestBed} from "@angular/core/testing";
-import {FormControl, Validators} from "@angular/forms";
 
 describe('LoginModalComponent', () => {
   let spectator: Spectator<LoginModalComponent>;
@@ -26,8 +27,10 @@ describe('LoginModalComponent', () => {
       MockComponent(FormInputTextComponent),
       MockComponent(FormInputPasswordComponent),
       MockComponent(FormInputRadioComponent),
+      MockComponent(FormErrorMessageComponent),
       MockComponent(ButtonComponent),
     ],
+    mocks: [TeacherService],
   });
 
   beforeEach(() => {
@@ -130,9 +133,27 @@ describe('LoginModalComponent', () => {
 
     it('should not close modal when form has Invalid postalCode', async () => {
       spectator.component.onOpen({ type: LoginType.Register });
-      spectator.component.registerTeacherForm.get('postalCode')?.setValue('12-INVALID');
+      spectator.component.registerTeacherForm
+        .get('postalCode')
+        ?.setValue('12-INVALID');
       await spectator.component.registerTeacher();
       expect(spectator.component.registerTeacherForm.invalid).toBe(true);
+      expect(closeSpy).not.toHaveBeenCalled();
+    });
+
+    it('should close modal when form is valid [register]', async () => {
+      spectator.component.onOpen({ type: LoginType.Login });
+      spectator.component.registerTeacherForm.setValue({
+        firstName: 'Firstname',
+        surname: 'Lastname',
+        email: 'email@gmail.nl',
+        postalCodeNumbers: 2172,
+        postalCodeLetters: 'BG',
+        postalCode: '2172BG',
+        country: 'Nederland',
+      });
+      await spectator.component.registerTeacher();
+      expect(spectator.component.registerTeacherForm.valid).toBe(true);
       expect(closeSpy).not.toHaveBeenCalled();
     });
   });
@@ -145,7 +166,7 @@ describe('LoginModalComponent', () => {
       expect(closeSpy).not.toHaveBeenCalled();
     });
 
-    it('should close modal when form is valid', async () => {
+    it('should close modal when form is valid [login]', async () => {
       spectator.component.onOpen({ type: LoginType.Login });
       spectator.component.registerSchoolForm
         .get('schoolName')
