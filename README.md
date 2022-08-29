@@ -4,7 +4,7 @@ This project contains the sourcecode of the LITTIL website.
 
 ## Setup your local environment
 
-For more information about setting up your local development environment, please read [set up your development environment](https://github.com/Devoxx4Kids-NPO/littil-frontend/blob/main/docs/set-up-your-development-environment.md).
+For more information about setting up your local development environment, please read [set up your development environment](https://devoxx4kids-npo.github.io/littil-documentation/platform/local-development/set-up-frontend-environment).
 
 ## Project files organization
 
