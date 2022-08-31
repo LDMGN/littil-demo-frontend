@@ -1,3 +1,7 @@
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=littil-frontend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=littil-frontend)
+![Build image workflow status](https://github.com/Devoxx4Kids-NPO/littil-frontend/actions/workflows/publish-build-container.yml/badge.svg)
+![Known Vulnerabilities](https://snyk.io/test/github/Devoxx4Kids-NPO/littil-frontend/badge.svg)
+
 # LITTIL website
 
 This project contains the sourcecode of the LITTIL website.
