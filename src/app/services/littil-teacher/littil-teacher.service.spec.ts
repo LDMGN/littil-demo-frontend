@@ -1,10 +1,15 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { createHttpFactory, SpectatorHttp } from '@ngneat/spectator';
-import { TeacherService } from '../../api/generated';
+import {
+  createHttpFactory,
+  HttpMethod,
+  SpectatorHttp,
+} from '@ngneat/spectator';
+import { Teacher, TeacherService } from '../../api/generated';
 import { LittilTeacherService } from './littil-teacher.service';
 
 describe('LittilTeacherService', () => {
+  let baseUrl = 'http://localhost/';
   let service: LittilTeacherService;
   let spectator: SpectatorHttp<LittilTeacherService>;
   const createHttp = createHttpFactory(LittilTeacherService);
@@ -22,32 +27,54 @@ describe('LittilTeacherService', () => {
     expect(service).toBeTruthy();
   });
 
-  //   it('test get by id', () => {
-  //     spectator.service.get('test').subscribe();
-  //     spectator.expectOne('api/v1/teacher/test', HttpMethod.GET);
-  //   });
+  describe('getById', () => {
+    it('should get teacher by id', () => {
+      spectator.service.getById('123').subscribe();
+      spectator.expectOne(baseUrl + 'api/v1/teacher/123', HttpMethod.GET);
+    });
+  });
 
-  //   it('test create new teacher', () => {
-  //     let teacher = new Teacher(
-  //       undefined,
-  //       'Gast',
-  //       'Docent',
-  //       'gast@docent.nl',
-  //       '1000AA'
-  //     );
-  //     spectator.service.create(teacher).subscribe();
-  //     spectator.expectOne('api/v1/teacher', HttpMethod.POST);
-  //   });
+  describe('getAll', () => {
+    it('should get all teachers', () => {
+      spectator.service.getAll().subscribe();
+      spectator.expectOne(baseUrl + 'api/v1/teacher', HttpMethod.GET);
+    });
+  });
 
-  //   it('test update existing teacher', () => {
-  //     let teacher = new Teacher(
-  //       'abcd-1234',
-  //       'Gast',
-  //       'Docent',
-  //       'gast@docent.nl',
-  //       '1000AA'
-  //     );
-  //     spectator.service.update(teacher).subscribe();
-  //     spectator.expectOne('api/v1/teacher', HttpMethod.PUT);
-  //   });
+  describe('create', () => {
+    it('should create new teacher', () => {
+      spectator.service
+        .create({
+          id: undefined,
+          firstName: 'Gast',
+          surname: 'Docent',
+          email: 'gast@docent.nl',
+          postalCode: '1000AA',
+        } as Teacher)
+        .subscribe();
+      spectator.expectOne(baseUrl + 'api/v1/teacher', HttpMethod.POST);
+    });
+  });
+
+  describe('update', () => {
+    it('should update teacher', () => {
+      spectator.service
+        .update('123', {
+          id: '123',
+          firstName: 'Gast',
+          surname: 'Docent',
+          email: 'gast@docent.nl',
+          postalCode: '1000AA',
+        } as Teacher)
+        .subscribe();
+      spectator.expectOne(baseUrl + 'api/v1/teacher/123', HttpMethod.PUT);
+    });
+  });
+
+  describe('delete', () => {
+    it('should delete teacher', () => {
+      spectator.service.delete('123').subscribe();
+      spectator.expectOne(baseUrl + 'api/v1/teacher/123', HttpMethod.DELETE);
+    });
+  });
 });
