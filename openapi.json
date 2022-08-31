@@ -1,114 +1,126 @@
 {
-  "openapi" : "3.0.3",
-  "info" : {
-    "title" : "Littil backend API",
-    "contact" : {
-      "name" : "Littil",
-      "url" : "https://littil.org/contact",
-      "email" : "info@littil.org"
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Littil backend API",
+    "contact": {
+      "name": "Littil",
+      "url": "https://littil.org/contact",
+      "email": "info@littil.org"
     },
-    "license" : {
-      "name" : "Apache 2.0",
-      "url" : "https://www.apache.org/licenses/LICENSE-2.0.html"
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version" : "1.0.0"
+    "version": "1.0.0"
   },
-  "tags" : [ {
-    "name" : "School",
-    "description" : "CRUD Operations"
-  }, {
-    "name" : "Teacher",
-    "description" : "CRUD Operations"
-  } ],
-  "paths" : {
-    "/api/v1/school" : {
-      "get" : {
-        "tags" : [ "School" ],
-        "summary" : "Get all schools",
-        "responses" : {
-          "200" : {
-            "description" : "Get all schools",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/School"
+  "tags": [
+    {
+      "name": "School",
+      "description": "CRUD Operations"
+    },
+    {
+      "name": "Teacher",
+      "description": "CRUD Operations"
+    },
+    {
+      "name": "User settings",
+      "description": "CRUD Operations"
+    },
+    {
+      "name": "Users",
+      "description": "CRUD Operations for users"
+    }
+  ],
+  "paths": {
+    "/api/v1/guest-teachers": {
+      "get": {
+        "tags": ["Teacher"],
+        "summary": "Get all guest teachers",
+        "responses": {
+          "200": {
+            "description": "Get all guest teachers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GuestTeacher"
                   }
                 }
               }
             }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
       },
-      "post" : {
-        "tags" : [ "School" ],
-        "summary" : "Create a new school",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/School"
+      "post": {
+        "tags": ["Teacher"],
+        "summary": "Create a new teacher",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuestTeacherPostResource"
               }
             }
           }
         },
-        "responses" : {
-          "201" : {
-            "description" : "School successfully created",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "required" : [ "name", "address", "postalCode", "contactPersonName", "contactPersonEmail" ],
-                  "type" : "object",
-                  "properties" : {
-                    "id" : {
-                      "$ref" : "#/components/schemas/UUID"
+        "responses": {
+          "201": {
+            "description": "Teacher successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "firstName",
+                    "surname",
+                    "address",
+                    "postalCode",
+                    "locale"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/UUID"
                     },
-                    "name" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "firstName": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "address" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "surname": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "postalCode" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "address": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "contactPersonName" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "postalCode": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "contactPersonEmail" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Validation errors occurred.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "errorId" : {
-                      "type" : "string"
+                    "locale": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "errors" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/ErrorMessage"
+                    "availability": {
+                      "uniqueItems": true,
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DayOfWeek"
                       }
                     }
                   }
@@ -116,182 +128,267 @@
               }
             }
           },
-          "500" : {
-            "description" : "Persistence error occurred. Failed to persist school.",
-            "content" : {
-              "application/json" : { }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/school/name/{name}" : {
-      "get" : {
-        "tags" : [ "School" ],
-        "summary" : "Fetch schools via name",
-        "parameters" : [ {
-          "name" : "name",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Schools with name found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/School"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/school/{id}" : {
-      "get" : {
-        "tags" : [ "School" ],
-        "summary" : "Fetch a specific school by Id",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/UUID"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "School with Id found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "required" : [ "name", "address", "postalCode", "contactPersonName", "contactPersonEmail" ],
-                  "type" : "object",
-                  "properties" : {
-                    "id" : {
-                      "$ref" : "#/components/schemas/UUID"
+          "400": {
+            "description": "Validation errors occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
                     },
-                    "name" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    },
-                    "address" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    },
-                    "postalCode" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    },
-                    "contactPersonName" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    },
-                    "contactPersonEmail" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "404" : {
-            "description" : "School with specific Id was not found.",
-            "content" : {
-              "application/json" : { }
+          "409": {
+            "description": "Current user already either a school or guest teacher profile attached",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Persistence error occurred. Failed to persist teacher.",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      }
+    },
+    "/api/v1/guest-teachers/name/{name}": {
+      "get": {
+        "tags": ["Teacher"],
+        "summary": "Fetch teachers via name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        }
-      },
-      "put" : {
-        "tags" : [ "School" ],
-        "summary" : "Update the school",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/UUID"
+        ],
+        "responses": {
+          "200": {
+            "description": "Teachers with name found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GuestTeacher"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Teacher with specific name was not found."
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
           }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/School"
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      }
+    },
+    "/api/v1/guest-teachers/{id}": {
+      "get": {
+        "tags": ["Teacher"],
+        "summary": "Fetch a specific teacher by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Teacher with Id found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "firstName",
+                    "surname",
+                    "address",
+                    "postalCode",
+                    "locale"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/UUID"
+                    },
+                    "firstName": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "surname": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "address": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "postalCode": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "locale": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "availability": {
+                      "uniqueItems": true,
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DayOfWeek"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Teacher with specific Id was not found."
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Teacher"],
+        "summary": "Update the teacher",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuestTeacher"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "School successfully updated",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "required" : [ "name", "address", "postalCode", "contactPersonName", "contactPersonEmail" ],
-                  "type" : "object",
-                  "properties" : {
-                    "id" : {
-                      "$ref" : "#/components/schemas/UUID"
+        "responses": {
+          "200": {
+            "description": "Teacher successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "firstName",
+                    "surname",
+                    "address",
+                    "postalCode",
+                    "locale"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/UUID"
                     },
-                    "name" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "firstName": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "address" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "surname": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "postalCode" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "address": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "contactPersonName" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "postalCode": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "contactPersonEmail" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Invalid school",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "errorId" : {
-                      "type" : "string"
+                    "locale": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "errors" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/ErrorMessage"
+                    "availability": {
+                      "uniqueItems": true,
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DayOfWeek"
                       }
                     }
                   }
@@ -299,124 +396,208 @@
               }
             }
           },
-          "500" : {
-            "description" : "Path variable Id does not match School.id",
-            "content" : {
-              "application/json" : { }
-            }
-          },
-          "404" : {
-            "description" : "No School found for id provided",
-            "content" : {
-              "application/json" : { }
-            }
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "School" ],
-        "summary" : "Delete a school specified with an Id",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/UUID"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Successfully deleted the school.",
-            "content" : {
-              "application/json" : { }
-            }
-          },
-          "404" : {
-            "description" : "The school to delete was not found.",
-            "content" : {
-              "application/json" : { }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/teacher" : {
-      "get" : {
-        "tags" : [ "Teacher" ],
-        "summary" : "Get all teachers",
-        "responses" : {
-          "200" : {
-            "description" : "Get all teachers",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Teacher"
+          "400": {
+            "description": "Invalid teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
+                      }
+                    }
                   }
                 }
               }
             }
+          },
+          "500": {
+            "description": "Path variable Id does not match Teacher.id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No Teacher found for id provided"
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
       },
-      "post" : {
-        "tags" : [ "Teacher" ],
-        "summary" : "Create a new teacher",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Teacher"
+      "delete": {
+        "tags": ["Teacher"],
+        "summary": "Delete a teacher specified with an Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the teacher.",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "The teacher to delete was not found.",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Current user is not owner of this guest teacher profile"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      }
+    },
+    "/api/v1/schools": {
+      "get": {
+        "tags": ["School"],
+        "summary": "Get all schools",
+        "responses": {
+          "200": {
+            "description": "Get all schools",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/School"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["School"],
+        "summary": "Create a new school",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchoolPostResource"
               }
             }
           }
         },
-        "responses" : {
-          "201" : {
-            "description" : "Teacher successfully created",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "required" : [ "firstName", "surname", "email", "postalCode", "locale" ],
-                  "type" : "object",
-                  "properties" : {
-                    "id" : {
-                      "$ref" : "#/components/schemas/UUID"
+        "responses": {
+          "201": {
+            "description": "School successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "name",
+                    "address",
+                    "postalCode",
+                    "contactPersonName"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/UUID"
                     },
-                    "firstName" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "name": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "surname" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "address": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "email" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "postalCode": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "postalCode" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "contactPersonName": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation errors occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
                     },
-                    "locale" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    },
-                    "preferences" : {
-                      "type" : "string"
-                    },
-                    "availability" : {
-                      "uniqueItems" : true,
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/DayOfWeek"
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
                       }
                     }
                   }
@@ -424,20 +605,20 @@
               }
             }
           },
-          "400" : {
-            "description" : "Validation errors occurred.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "errorId" : {
-                      "type" : "string"
+          "409": {
+            "description": "Current user already either a school or guest teacher profile attached",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
                     },
-                    "errors" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/ErrorMessage"
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
                       }
                     }
                   }
@@ -445,181 +626,219 @@
               }
             }
           },
-          "500" : {
-            "description" : "Persistence error occurred. Failed to persist teacher.",
-            "content" : {
-              "application/json" : { }
-            }
+          "500": {
+            "description": "Persistence error occurred. Failed to persist school."
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
       }
     },
-    "/api/v1/teacher/name/{name}" : {
-      "get" : {
-        "tags" : [ "Teacher" ],
-        "summary" : "Fetch teachers via name",
-        "parameters" : [ {
-          "name" : "name",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
+    "/api/v1/schools/name/{name}": {
+      "get": {
+        "tags": ["School"],
+        "summary": "Fetch schools via name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Teachers with name found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Teacher"
+        ],
+        "responses": {
+          "200": {
+            "description": "Schools with name found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/School"
                   }
                 }
               }
             }
+          },
+          "404": {
+            "description": "School with specific name was not found."
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
       }
     },
-    "/api/v1/teacher/{id}" : {
-      "get" : {
-        "tags" : [ "Teacher" ],
-        "summary" : "Fetch a specific teacher by Id",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/UUID"
+    "/api/v1/schools/{id}": {
+      "get": {
+        "tags": ["School"],
+        "summary": "Fetch a specific school by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Teacher with Id found.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "required" : [ "firstName", "surname", "email", "postalCode", "locale" ],
-                  "type" : "object",
-                  "properties" : {
-                    "id" : {
-                      "$ref" : "#/components/schemas/UUID"
+        ],
+        "responses": {
+          "200": {
+            "description": "School with Id found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "name",
+                    "address",
+                    "postalCode",
+                    "contactPersonName"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/UUID"
                     },
-                    "firstName" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "name": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "surname" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "address": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "email" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "postalCode": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "postalCode" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    },
-                    "locale" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    },
-                    "preferences" : {
-                      "type" : "string"
-                    },
-                    "availability" : {
-                      "uniqueItems" : true,
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/DayOfWeek"
-                      }
+                    "contactPersonName": {
+                      "minLength": 1,
+                      "type": "string"
                     }
                   }
                 }
               }
             }
           },
-          "404" : {
-            "description" : "Teacher with specific Id was not found.",
-            "content" : {
-              "application/json" : { }
-            }
+          "404": {
+            "description": "School with specific Id was not found."
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
       },
-      "put" : {
-        "tags" : [ "Teacher" ],
-        "summary" : "Update the teacher",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/UUID"
+      "put": {
+        "tags": ["School"],
+        "summary": "Update the school",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            }
           }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Teacher"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/School"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Teacher successfully updated",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "required" : [ "firstName", "surname", "email", "postalCode", "locale" ],
-                  "type" : "object",
-                  "properties" : {
-                    "id" : {
-                      "$ref" : "#/components/schemas/UUID"
+        "responses": {
+          "200": {
+            "description": "School successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "name",
+                    "address",
+                    "postalCode",
+                    "contactPersonName"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/UUID"
                     },
-                    "firstName" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "name": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "surname" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "address": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "email" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "postalCode": {
+                      "minLength": 1,
+                      "type": "string"
                     },
-                    "postalCode" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
+                    "contactPersonName": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid school",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
                     },
-                    "locale" : {
-                      "minLength" : 1,
-                      "type" : "string",
-                      "nullable" : false
-                    },
-                    "preferences" : {
-                      "type" : "string"
-                    },
-                    "availability" : {
-                      "uniqueItems" : true,
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/DayOfWeek"
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
                       }
                     }
                   }
@@ -627,20 +846,20 @@
               }
             }
           },
-          "400" : {
-            "description" : "Invalid teacher",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "errorId" : {
-                      "type" : "string"
+          "500": {
+            "description": "Path variable Id does not match School.id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
                     },
-                    "errors" : {
-                      "type" : "array",
-                      "items" : {
-                        "$ref" : "#/components/schemas/ErrorMessage"
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
                       }
                     }
                   }
@@ -648,147 +867,795 @@
               }
             }
           },
-          "500" : {
-            "description" : "Path variable Id does not match Teacher.id",
-            "content" : {
-              "application/json" : { }
-            }
+          "404": {
+            "description": "No School found for  provided id"
           },
-          "404" : {
-            "description" : "No Teacher found for id provided",
-            "content" : {
-              "application/json" : { }
-            }
+          "401": {
+            "description": "Current user is not owner of this school"
+          },
+          "403": {
+            "description": "Not Allowed"
           }
-        }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
       },
-      "delete" : {
-        "tags" : [ "Teacher" ],
-        "summary" : "Delete a teacher specified with an Id",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/UUID"
+      "delete": {
+        "tags": ["School"],
+        "summary": "Delete a school specified with an Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Successfully deleted the teacher.",
-            "content" : {
-              "application/json" : { }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the school.",
+            "content": {
+              "application/json": {}
             }
           },
-          "404" : {
-            "description" : "The teacher to delete was not found.",
-            "content" : {
-              "application/json" : { }
+          "404": {
+            "description": "The school to delete was not found."
+          },
+          "401": {
+            "description": "Current user is not owner of this school"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      }
+    },
+    "/api/v1/user-settings": {
+      "get": {
+        "tags": ["User settings"],
+        "summary": "Get all user settings for current user",
+        "responses": {
+          "200": {
+            "description": "Get all user settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserSetting"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["User settings"],
+        "summary": "Create a new user setting",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSetting"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User setting successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": ["key", "value"],
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "value": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation errors occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Persistence error occurred. Failed to persist user setting.",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      }
+    },
+    "/api/v1/user-settings/{key}": {
+      "get": {
+        "tags": ["User settings"],
+        "summary": "Get user setting by key for the current user",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all available settings of the current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/School"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["User settings"],
+        "summary": "Update user setting by key for the current user",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSetting"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User setting successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": ["key", "value"],
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "value": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user setting",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Path variable Key does not match UserSetting.key",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "No user setting found for key provided and current user",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["User settings"],
+        "summary": "Delete a user setting specified with an key",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the user setting.",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "The user setting to delete was not found.",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": []
+          },
+          {
+            "Auth0": []
+          }
+        ]
+      }
+    },
+    "/api/v1/users/user": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "Get all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": ["admin"]
+          },
+          {
+            "Auth0": ["admin"]
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPostResource"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": ["emailAddress"],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/UUID"
+                    },
+                    "emailAddress": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "provider": {
+                      "$ref": "#/components/schemas/Provider"
+                    },
+                    "providerId": {
+                      "type": "string"
+                    },
+                    "roles": {
+                      "uniqueItems": true,
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation errors occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User with the same e-mail address already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorId": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorMessage"
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
+      }
+    },
+    "/api/v1/users/user/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Fetch a specific user by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User with Id found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": ["emailAddress"],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/UUID"
+                    },
+                    "emailAddress": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "provider": {
+                      "$ref": "#/components/schemas/Provider"
+                    },
+                    "providerId": {
+                      "type": "string"
+                    },
+                    "roles": {
+                      "uniqueItems": true,
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User with specific Id was not found."
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": ["admin"]
+          },
+          {
+            "Auth0": ["admin"]
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete a user specified with an id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UUID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the user."
+          },
+          "404": {
+            "description": "The user to delete was not found."
+          },
+          "401": {
+            "description": "Not Authorized"
+          },
+          "403": {
+            "description": "Not Allowed"
+          }
+        },
+        "security": [
+          {
+            "Auth0": ["admin"]
+          },
+          {
+            "Auth0": ["admin"]
+          }
+        ]
       }
     }
   },
-  "components" : {
-    "schemas" : {
-      "DayOfWeek" : {
-        "enum" : [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ],
-        "type" : "string"
+  "components": {
+    "schemas": {
+      "DayOfWeek": {
+        "enum": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY"
+        ],
+        "type": "string"
       },
-      "ErrorMessage" : {
-        "type" : "object",
-        "properties" : {
-          "path" : {
-            "type" : "string"
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
           },
-          "message" : {
-            "type" : "string"
+          "message": {
+            "type": "string"
           }
         }
       },
-      "School" : {
-        "required" : [ "name", "address", "postalCode", "contactPersonName", "contactPersonEmail" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "$ref" : "#/components/schemas/UUID"
+      "GuestTeacher": {
+        "required": ["firstName", "surname", "address", "postalCode", "locale"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/UUID"
           },
-          "name" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
+          "firstName": {
+            "minLength": 1,
+            "type": "string"
           },
-          "address" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
+          "surname": {
+            "minLength": 1,
+            "type": "string"
           },
-          "postalCode" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
+          "address": {
+            "minLength": 1,
+            "type": "string"
           },
-          "contactPersonName" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
+          "postalCode": {
+            "minLength": 1,
+            "type": "string"
           },
-          "contactPersonEmail" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
-          }
-        }
-      },
-      "Teacher" : {
-        "required" : [ "firstName", "surname", "email", "postalCode", "locale" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "$ref" : "#/components/schemas/UUID"
+          "locale": {
+            "minLength": 1,
+            "type": "string"
           },
-          "firstName" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
-          },
-          "surname" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
-          },
-          "email" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
-          },
-          "postalCode" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
-          },
-          "locale" : {
-            "minLength" : 1,
-            "type" : "string",
-            "nullable" : false
-          },
-          "preferences" : {
-            "type" : "string"
-          },
-          "availability" : {
-            "uniqueItems" : true,
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/DayOfWeek"
+          "availability": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DayOfWeek"
             }
           }
         }
       },
-      "UUID" : {
-        "format" : "uuid",
-        "pattern" : "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
-        "type" : "string"
+      "GuestTeacherPostResource": {
+        "required": ["firstName", "surname", "address", "postalCode", "locale"],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "surname": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "postalCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "locale": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "availability": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DayOfWeek"
+            }
+          }
+        }
+      },
+      "Provider": {
+        "enum": ["AUTH0"],
+        "type": "string"
+      },
+      "School": {
+        "required": ["name", "address", "postalCode", "contactPersonName"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/UUID"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "postalCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "contactPersonName": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "SchoolPostResource": {
+        "required": ["name", "address", "postalCode", "contactPersonName"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "postalCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "contactPersonName": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "UUID": {
+        "format": "uuid",
+        "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+        "type": "string"
+      },
+      "User": {
+        "required": ["emailAddress"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/UUID"
+          },
+          "emailAddress": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/Provider"
+          },
+          "providerId": {
+            "type": "string"
+          },
+          "roles": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "UserPostResource": {
+        "type": "object",
+        "properties": {
+          "emailAddress": {
+            "type": "string"
+          }
+        }
+      },
+      "UserSetting": {
+        "required": ["key", "value"],
+        "type": "object",
+        "properties": {
+          "key": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Auth0": {
+        "type": "oauth2",
+        "description": "Authentication",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://oidc_tenant/authorize?audience=https://oidc_tenant/api/v2/"
+          }
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Teacher, TeacherService } from '../../api/generated';
+import { TeacherService } from '../../api/generated';
+import { GuestTeacher } from '../../api/generated/model/guestTeacher';
 
 @Injectable({
   providedIn: 'root',
@@ -8,23 +9,23 @@ import { Teacher, TeacherService } from '../../api/generated';
 export class LittilTeacherService {
   constructor(private teacherService: TeacherService) {}
 
-  getById(id: string): Observable<Teacher> {
-    return this.teacherService.apiV1TeacherIdGet(id);
+  getById(id: string): Observable<GuestTeacher> {
+    return this.teacherService.apiV1GuestTeachersIdGet(id);
   }
 
-  getAll(): Observable<Teacher[]> {
-    return this.teacherService.apiV1TeacherGet();
+  getAll(): Observable<GuestTeacher[]> {
+    return this.teacherService.apiV1GuestTeachersGet();
   }
 
-  create(teacher: Teacher): Observable<any> {
-    return this.teacherService.apiV1TeacherPost(teacher);
+  create(teacher: GuestTeacher): Observable<any> {
+    return this.teacherService.apiV1GuestTeachersPost(teacher);
   }
 
-  update(id: string, teacher: Teacher): Observable<any> {
-    return this.teacherService.apiV1TeacherIdPut(id, teacher);
+  update(id: string, teacher: GuestTeacher): Observable<any> {
+    return this.teacherService.apiV1GuestTeachersIdPut(id, teacher);
   }
 
   delete(id: string): Observable<number> {
-    return this.teacherService.apiV1TeacherIdDelete(id);
+    return this.teacherService.apiV1GuestTeachersIdDelete(id);
   }
 }

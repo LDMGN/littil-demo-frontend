@@ -30,14 +30,14 @@ describe('LittilSchoolService', () => {
   describe('getById', () => {
     it('should get teacher by id', () => {
       spectator.service.getById('123').subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/school/123', HttpMethod.GET);
+      spectator.expectOne(baseUrl + 'api/v1/schools/123', HttpMethod.GET);
     });
   });
 
   describe('getAll', () => {
     it('should get all teachers', () => {
       spectator.service.getAll().subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/school', HttpMethod.GET);
+      spectator.expectOne(baseUrl + 'api/v1/schools', HttpMethod.GET);
     });
   });
 
@@ -53,7 +53,7 @@ describe('LittilSchoolService', () => {
           contactPersonEmail: 'email@email.nl',
         } as School)
         .subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/school', HttpMethod.POST);
+      spectator.expectOne(baseUrl + 'api/v1/schools', HttpMethod.POST);
     });
   });
 
@@ -69,14 +69,14 @@ describe('LittilSchoolService', () => {
           contactPersonEmail: 'email@email.nl',
         } as School)
         .subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/school/123', HttpMethod.PUT);
+      spectator.expectOne(baseUrl + 'api/v1/schools/123', HttpMethod.PUT);
     });
   });
 
   describe('delete', () => {
     it('should delete teacher', () => {
       spectator.service.delete('123').subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/school/123', HttpMethod.DELETE);
+      spectator.expectOne(baseUrl + 'api/v1/schools/123', HttpMethod.DELETE);
     });
   });
 });

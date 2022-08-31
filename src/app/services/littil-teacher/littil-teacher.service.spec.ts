@@ -5,7 +5,8 @@ import {
   HttpMethod,
   SpectatorHttp,
 } from '@ngneat/spectator';
-import { Teacher, TeacherService } from '../../api/generated';
+import { TeacherService } from '../../api/generated';
+import { GuestTeacher } from '../../api/generated/model/guestTeacher';
 import { LittilTeacherService } from './littil-teacher.service';
 
 describe('LittilTeacherService', () => {
@@ -30,14 +31,17 @@ describe('LittilTeacherService', () => {
   describe('getById', () => {
     it('should get teacher by id', () => {
       spectator.service.getById('123').subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/teacher/123', HttpMethod.GET);
+      spectator.expectOne(
+        baseUrl + 'api/v1/guest-teachers/123',
+        HttpMethod.GET
+      );
     });
   });
 
   describe('getAll', () => {
     it('should get all teachers', () => {
       spectator.service.getAll().subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/teacher', HttpMethod.GET);
+      spectator.expectOne(baseUrl + 'api/v1/guest-teachers', HttpMethod.GET);
     });
   });
 
@@ -48,11 +52,11 @@ describe('LittilTeacherService', () => {
           id: undefined,
           firstName: 'Gast',
           surname: 'Docent',
-          email: 'gast@docent.nl',
+          address: 'Street 1',
           postalCode: '1000AA',
-        } as Teacher)
+        } as GuestTeacher)
         .subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/teacher', HttpMethod.POST);
+      spectator.expectOne(baseUrl + 'api/v1/guest-teachers', HttpMethod.POST);
     });
   });
 
@@ -63,18 +67,24 @@ describe('LittilTeacherService', () => {
           id: '123',
           firstName: 'Gast',
           surname: 'Docent',
-          email: 'gast@docent.nl',
+          address: 'Street 1',
           postalCode: '1000AA',
-        } as Teacher)
+        } as GuestTeacher)
         .subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/teacher/123', HttpMethod.PUT);
+      spectator.expectOne(
+        baseUrl + 'api/v1/guest-teachers/123',
+        HttpMethod.PUT
+      );
     });
   });
 
   describe('delete', () => {
     it('should delete teacher', () => {
       spectator.service.delete('123').subscribe();
-      spectator.expectOne(baseUrl + 'api/v1/teacher/123', HttpMethod.DELETE);
+      spectator.expectOne(
+        baseUrl + 'api/v1/guest-teachers/123',
+        HttpMethod.DELETE
+      );
     });
   });
 });
