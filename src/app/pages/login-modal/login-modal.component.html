@@ -1,195 +1,37 @@
-<div *ngIf="!loading">
-  <h1 class="font-bold text-lg text-blue-200 mb-3">
-    {{ type === LoginType.Login ? "Inloggen" : "Registreren" }}
-  </h1>
-  <ng-container *ngIf="type === LoginType.Login">
-    <form [formGroup]="loginForm" data-test="form-login" (submit)="onClickOK()">
-      <littil-form-input-text
-        formControlName="email"
-        id="email"
-        label="E-mailadres"
-        [hasError]="FormUtil.InValid(loginForm.controls['email'])"
-      >
-        <littil-form-error-message
-          *ngIf="FormUtil.InValid(loginForm.controls['email'])"
-          errorText="E-mailadres is verplicht"
-        ></littil-form-error-message>
-      </littil-form-input-text>
-      <littil-form-input-password
-        formControlName="password"
-        id="password"
-        label="Wachtwoord"
-        [hasError]="FormUtil.InValid(loginForm.controls['password'])"
-      >
-        <littil-form-error-message
-          *ngIf="FormUtil.InValid(loginForm.controls['password'])"
-          errorText="Wachtwoord is verplicht"
-        ></littil-form-error-message>
-      </littil-form-input-password>
-    </form>
-  </ng-container>
-  <ng-container *ngIf="type === LoginType.Register">
-    <littil-form-input-radio
-      id="type"
-      label="Type registratie"
-      [radioInputs]="radioInputs"
-      (onValueChanged)="onRegisterTypeChanged($event)"
-    ></littil-form-input-radio>
-    <form
-      *ngIf="registerType === 'teacher'"
-      [formGroup]="registerTeacherForm"
-      class="mb-3"
-      data-test="form-register-teacher"
-      (submit)="onClickOK()"
+<div [@hideShow]="loading ? 'hidden' : 'visible'">
+  <h1 class="font-bold text-lg text-blue-200 mb-3">Inloggen</h1>
+  <form
+    [formGroup]="loginForm"
+    data-test="form-login"
+    (submit)="onClickLogin()"
+  >
+    <littil-form-input-text
+      formControlName="email"
+      id="email"
+      label="E-mailadres"
+      [hasError]="FormUtil.InValid(loginForm.controls['email'])"
     >
-      <littil-form-input-text
-        formControlName="firstName"
-        id="firstName"
-        label="Voornaam"
-        [hasError]="FormUtil.InValid(registerTeacherForm.controls['firstName'])"
-      >
-        <littil-form-error-message
-          *ngIf="FormUtil.InValid(registerTeacherForm.controls['firstName'])"
-          errorText="Voornaam is verplicht"
-        ></littil-form-error-message>
-      </littil-form-input-text>
-      <littil-form-input-text
-        formControlName="surname"
-        id="surname"
-        label="Achternaam"
-        [hasError]="FormUtil.InValid(registerTeacherForm.controls['surname'])"
-      >
-        <littil-form-error-message
-          *ngIf="FormUtil.InValid(registerTeacherForm.controls['surname'])"
-          errorText="Achternaam is verplicht"
-        ></littil-form-error-message
-      ></littil-form-input-text>
-      <littil-form-input-text
-        formControlName="email"
-        id="email"
-        label="E-mailadres"
-        [hasError]="FormUtil.InValid(registerTeacherForm.controls['email'])"
-      >
-        <littil-form-error-message
-          *ngIf="
-            FormUtil.InValid(registerTeacherForm.controls['email']) &&
-            FormUtil.ContainsError(
-              registerTeacherForm.controls['email'],
-              'required'
-            )
-          "
-          errorText="E-mailadres is verplicht"
-        ></littil-form-error-message>
-        <littil-form-error-message
-          *ngIf="
-            FormUtil.InValid(registerTeacherForm.controls['email']) &&
-            FormUtil.ContainsError(
-              registerTeacherForm.controls['email'],
-              'email'
-            )
-          "
-          errorText="Ongeldig e-mailadres"
-        ></littil-form-error-message>
-      </littil-form-input-text>
-      <!-- TODO: Question: why do we ask for a postalCode? -->
-      <div class="flex">
-        <div class="w-1/4 mr-3">
-          <label class="font-bold">Postcode</label>
-          <div class="flex">
-            <littil-form-input-text
-              [ngStyle]="{ width: '70%' }"
-              class="mr-3"
-              formControlName="postalCodeNumbers"
-              maxLength="4"
-              id="postalCodeNumbers"
-              [marginBottom]="false"
-              [hasError]="
-                FormUtil.InValid(
-                  registerTeacherForm.controls['postalCodeNumbers']
-                )
-              "
-            >
-            </littil-form-input-text>
-            <littil-form-input-text
-              [ngStyle]="{ width: '30%' }"
-              formControlName="postalCodeLetters"
-              id="postalCodeLetters"
-              maxLength="2"
-              [marginBottom]="false"
-              [hasError]="
-                FormUtil.InValid(
-                  registerTeacherForm.controls['postalCodeLetters']
-                )
-              "
-            >
-            </littil-form-input-text>
-          </div>
-          <littil-form-error-message
-            *ngIf="checkPostalCodeRequiredErrors()"
-            errorText="Postcode is verplicht"
-          ></littil-form-error-message>
-          <littil-form-error-message
-            *ngIf="
-              FormUtil.InValid(
-                registerTeacherForm.controls['postalCodeNumbers']
-              ) &&
-              FormUtil.ContainsError(
-                registerTeacherForm.controls['postalCodeNumbers'],
-                'pattern'
-              )
-            "
-            errorText="Voer de nummers van de postcode in"
-          ></littil-form-error-message>
-          <littil-form-error-message
-            *ngIf="
-              FormUtil.InValid(
-                registerTeacherForm.controls['postalCodeLetters']
-              ) &&
-              FormUtil.ContainsError(
-                registerTeacherForm.controls['postalCodeLetters'],
-                'pattern'
-              )
-            "
-            errorText="Voer de letters van de postcode in"
-          ></littil-form-error-message>
-        </div>
-        <!-- TODO: Question: why do we ask for a country? Why not a city? Is this platform international? -->
-        <littil-form-input-text
-          class="w-3/4"
-          formControlName="country"
-          id="country"
-          label="Land"
-          [hasError]="FormUtil.InValid(registerTeacherForm.controls['country'])"
-        >
-          <littil-form-error-message
-            *ngIf="FormUtil.InValid(registerTeacherForm.controls['country'])"
-            errorText="Land is verplicht"
-          ></littil-form-error-message>
-        </littil-form-input-text>
-      </div>
-    </form>
-    <form
-      *ngIf="registerType === 'school'"
-      [formGroup]="registerSchoolForm"
-      data-test="form-register-school"
-      (submit)="onClickOK()"
+      <littil-form-error-message
+        *ngIf="FormUtil.InValid(loginForm.controls['email'])"
+        errorText="E-mailadres is verplicht"
+      ></littil-form-error-message>
+    </littil-form-input-text>
+    <littil-form-input-password
+      formControlName="password"
+      id="password"
+      label="Wachtwoord"
+      [hasError]="FormUtil.InValid(loginForm.controls['password'])"
     >
-      <littil-form-input-text
-        formControlName="schoolName"
-        id="schoolName"
-        label="Naam school"
-        [hasError]="FormUtil.InValid(registerSchoolForm.controls['name'])"
-      >
-        <littil-form-error-message
-          *ngIf="FormUtil.InValid(registerSchoolForm.controls['name'])"
-          errorText="Naam is verplicht"
-        ></littil-form-error-message>
-      </littil-form-input-text>
-    </form>
-  </ng-container>
-  <littil-button [inline]="true" (click)="onClickOK()">
-    {{ type === LoginType.Login ? "Inloggen" : "Registreren" }}
-  </littil-button>
+      <littil-form-error-message
+        *ngIf="FormUtil.InValid(loginForm.controls['password'])"
+        errorText="Wachtwoord is verplicht"
+      ></littil-form-error-message>
+    </littil-form-input-password>
+  </form>
+
+  <littil-button [inline]="true" (click)="onClickLogin()"
+    >Inloggen</littil-button
+  >
   <littil-button
     [inline]="true"
     colorClass="bg-yellow-50"
