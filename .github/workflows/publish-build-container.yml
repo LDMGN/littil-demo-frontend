@@ -26,10 +26,10 @@ jobs:
           cache: "npm"
       - name: Install project
         run: npm ci
-      - name: Verify project
-        run: npm run test
       - name: Generate API
         run: npm run openapi
+      - name: Verify project
+        run: npm run test
       - name: Build project
         run: npm run build
       - name: Analyze build code
