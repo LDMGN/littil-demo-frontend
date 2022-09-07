@@ -8,4 +8,4 @@ import { FormErrorMessageComponent } from './form-error-message.component';
   providers: [],
   exports: [FormErrorMessageComponent],
 })
-export class FormErrorMessagetModule {}
+export class FormErrorMessageModule {}

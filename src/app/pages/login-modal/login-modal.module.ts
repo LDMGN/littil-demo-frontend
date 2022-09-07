@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ButtonModule } from 'src/app/components/button/button.module';
-import { FormErrorMessagetModule } from 'src/app/components/forms/form-error-message/form-error-message.module';
-import { FormInputRadioModule } from 'src/app/components/forms/radio-input/form-input-radio.module';
+import { ButtonModule } from '../../components/button/button.module';
+import { FormErrorMessageModule } from '../../components/forms/form-error-message/form-error-message.module';
 import { FormInputPasswordModule } from '../../components/forms/password-input/form-input-password.module';
+import { FormInputRadioModule } from '../../components/forms/radio-input/form-input-radio.module';
 import { FormInputTextModule } from '../../components/forms/text-input/form-input-text.module';
 import { LoginModalComponent } from './login-modal.component';
 
@@ -20,7 +20,7 @@ import { LoginModalComponent } from './login-modal.component';
     FormInputTextModule,
     FormInputPasswordModule,
     FormInputRadioModule,
-    FormErrorMessagetModule,
+    FormErrorMessageModule,
   ],
   exports: [LoginModalComponent],
   entryComponents: [LoginModalComponent],

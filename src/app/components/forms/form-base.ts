@@ -6,7 +6,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class FormBaseComponent {
   @Input() id!: string;
-  @Input() label: string = '';
+  @Input() label!: string;
+  @Input() maxLength!: string;
+  @Input() width!: string;
+  @Input() marginBottom: boolean = true;
   @Input() disabled: boolean = false;
   @Input() hasError: boolean = false;
   @Output() onValueChanged: EventEmitter<string> = new EventEmitter<string>();

@@ -48,6 +48,7 @@ describe('FormUtil', () => {
       expect(FormUtil.InValid(undefined as any)).toEqual(false);
     });
   });
+
   describe('ValidateAll', () => {
     it('should validate formGroup', () => {
       let spy = jest.spyOn(FormUtil, 'ValidateAll');
@@ -70,6 +71,31 @@ describe('FormUtil', () => {
       FormUtil.ValidateAll(formGroup);
       expect(spy).toHaveBeenCalledTimes(3);
       expect(formGroup.controls['name'].touched).toEqual(true);
+    });
+  });
+
+  describe('ContainsError', () => {
+    it('should return true if control has errors', () => {
+      const formGroup = new FormGroup({
+        name: new FormControl('', Validators.required),
+      });
+      expect(
+        FormUtil.ContainsError(formGroup.controls['name'], 'required')
+      ).toBeTruthy();
+    });
+    it('should return false if control has no errors', () => {
+      const formGroup = new FormGroup({
+        name: new FormControl('name', Validators.required),
+      });
+      expect(
+        FormUtil.ContainsError(formGroup.controls['name'], 'required')
+      ).toBeFalsy();
+    });
+    it('should return false if control is undefined', () => {
+      expect(FormUtil.ContainsError(undefined as any, 'error')).toBeFalsy();
+    });
+    it('should return false if control is undefined', () => {
+      expect((FormUtil as any).InValidErrors(undefined as any)).toEqual(null);
     });
   });
 });
