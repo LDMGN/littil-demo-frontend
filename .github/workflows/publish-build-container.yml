@@ -23,9 +23,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: 'npm'
+          cache: "npm"
       - name: Install project
         run: npm ci
+      - name: Generate API
+        run: npm run openapi
       - name: Verify project
         run: npm run test
       - name: Build project
@@ -33,7 +35,7 @@ jobs:
       - name: Analyze build code
         uses: sonarsource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >

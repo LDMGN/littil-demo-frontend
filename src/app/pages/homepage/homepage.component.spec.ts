@@ -3,10 +3,7 @@ import { createRoutingFactory } from '@ngneat/spectator/jest';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { ButtonComponent } from '../../components/button/button.component';
 import { ModalController } from '../../components/modal/modal.controller';
-import {
-  LoginModalComponent,
-  LoginType,
-} from '../login-modal/login-modal.component';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { HomepageComponent } from './homepage.component';
 
 describe('HomepageComponent', () => {
@@ -38,18 +35,9 @@ describe('HomepageComponent', () => {
 
   describe('openLoginModal', () => {
     it('should call present modalController function [type=Login]', async () => {
-      await spectator.component.openLoginModal(LoginType.Login);
+      await spectator.component.openLoginModal();
       expect(modalControllerSpy).toHaveBeenCalledTimes(1);
-      expect(modalControllerSpy).toHaveBeenCalledWith(LoginModalComponent, {
-        type: LoginType.Login,
-      });
-    });
-    it('should call present modalController function [type=Register]', async () => {
-      await spectator.component.openLoginModal(LoginType.Register);
-      expect(modalControllerSpy).toHaveBeenCalledTimes(1);
-      expect(modalControllerSpy).toHaveBeenCalledWith(LoginModalComponent, {
-        type: LoginType.Register,
-      });
+      expect(modalControllerSpy).toHaveBeenCalledWith(LoginModalComponent);
     });
   });
 
@@ -60,15 +48,6 @@ describe('HomepageComponent', () => {
         spectator.click(loginBtn);
       }
       expect(openLoginModalSpy).toHaveBeenCalledTimes(1);
-      expect(openLoginModalSpy).toHaveBeenCalledWith(LoginType.Login);
-    });
-    it('should call openLoginModal() when clicked on Register button', async () => {
-      const registerBtn = spectator.query('[data-test="register-btn"]');
-      if (registerBtn) {
-        spectator.click(registerBtn);
-      }
-      expect(openLoginModalSpy).toHaveBeenCalledTimes(1);
-      expect(openLoginModalSpy).toHaveBeenCalledWith(LoginType.Register);
     });
   });
 });

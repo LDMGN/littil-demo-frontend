@@ -110,7 +110,6 @@ describe('FormInputPasswordComponent', () => {
       spectator.setInput('id', 'firstName');
       spectator.setInput('label', 'Firstname');
       spectator.setInput('placeholder', 'Give your firstname');
-      //spectator.setInput('errorMessage', 'Fill in your firstname');
       spectator.setInput('hasError', true);
       expect(spectator.query('input')).not.toHaveClass(
         'border-yellow-100 focus:border-yellow-200 placeholder:text-yellow-100 focus:ring-yellow-200'
@@ -126,10 +125,8 @@ describe('FormInputPasswordComponent', () => {
       spectator.setInput('id', 'firstName');
       spectator.setInput('label', 'Firstname');
       spectator.setInput('placeholder', 'Give your firstname');
-      //spectator.setInput('errorMessage', 'Fill in your firstname');
       spectator.setInput('hasError', true);
       expect(spectator.query('p')).toBeDefined();
-      //expect(spectator.query('p')).toHaveText('Fill in your firstname');
     });
     it('should set correct classes on disabled state', async () => {
       spectator.setInput('id', 'firstName');
