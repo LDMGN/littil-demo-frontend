@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'littil-container',
-  templateUrl: './container.component.html',
-  styleUrls: ['./container.component.scss'],
+  selector: 'littil-content-container',
+  templateUrl: './content-container.component.html',
 })
-export class ContainerComponent {
+export class ContentContainerComponent {
   @Input()
   public outerClasses = '';
 
