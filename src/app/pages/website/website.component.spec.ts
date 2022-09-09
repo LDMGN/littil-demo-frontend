@@ -4,7 +4,7 @@ import { MockComponent, MockProvider } from 'ng-mocks';
 import { ButtonComponent } from '../../components/button/button.component';
 import { ContentContainerComponent } from '../../components/content-container/content-container.component';
 import { ModalController } from '../../components/modal/modal.controller';
-import { LoginModalComponent } from '../login-modal/login-modal.component';
+import { LoginModalComponent } from '../../components/login-modal/login-modal.component';
 import { WebsiteComponent } from './website.component';
 
 describe('WebsiteComponent', () => {

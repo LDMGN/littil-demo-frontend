@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ButtonModule } from '../../components/button/button.module';
 import { ContentContainerModule } from '../../components/content-container/content-container.module';
 import { MainMenuButtonModule } from '../../components/main-menu-button/main-menu-button.module';
-import { LoginModalModule } from '../login-modal/login-modal.module';
+import { LoginModalModule } from '../../components/login-modal/login-modal.module';
 import { WebsiteComponent } from './website.component';
 import { websiteRoutes } from './website.routing';
 
