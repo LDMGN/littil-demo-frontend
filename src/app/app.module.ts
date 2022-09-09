@@ -1,8 +1,8 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ApiModule } from './api/generated/api.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule} from '@angular/common/http';
+import { ApiModule } from './api/generated';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ModalControllerModule } from './components/modal/modal.controller.module';
@@ -20,4 +20,5 @@ import { ModalControllerModule } from './components/modal/modal.controller.modul
   providers: [HttpClient],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

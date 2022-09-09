@@ -1,5 +1,10 @@
-<div class="p-4 bg-blue-50 flex justify-between items-center">
-  <div>Logo</div>
+<littil-container [outerClasses]="'bg-blue-50 p-4 flex'"
+                  [innerClasses]="'flex justify-between'">
+  <div>
+    <img src="assets/littil_logo.png"
+         class="h-12"
+         alt="LITTIL logo">
+  </div>
   <div>
     <!-- <littil-button [inline]="true" data-test="register-btn"
       >Registeren</littil-button
@@ -8,7 +13,31 @@
       [inline]="true"
       data-test="login-btn"
       (click)="openLoginModal()"
-      >Inloggen</littil-button
+    >Inloggen
+    </littil-button
     >
   </div>
-</div>
+</littil-container>
+<littil-container [outerClasses]="'bg-yellow-100'"
+                  [innerClasses]="'text-white uppercase flex'">
+  <littil-main-menu-button [routerLink]="'/'">Home</littil-main-menu-button>
+  <littil-main-menu-button [routerLink]="'/about-us'">Over ons</littil-main-menu-button>
+  <littil-main-menu-button [routerLink]="'/info'">Informatie</littil-main-menu-button>
+  <littil-main-menu-button [routerLink]="'/blog'">Blog</littil-main-menu-button>
+  <littil-main-menu-button [routerLink]="'/contact'">Contact</littil-main-menu-button>
+  <littil-main-menu-button [routerLink]="'/devoxx4kids'">Devoxx4Kids</littil-main-menu-button>
+</littil-container>
+<littil-container>
+  <h1>Kinderen op een leuke en inspirerende manier kennis laten maken met programmeren.</h1>
+  <strong>Vanuit de stichting Devoxx4kids willen we meer kinderen enthousiast maken voor het
+    programmeer vak en hen via scholen bereiken en ondersteunen.</strong>
+
+  <p>
+    Hiervoor bouwen wij aan een platform genaamd LITTIL, waarmee techneuten die het leuk vinden om
+    workshops te geven in contact kunnen komen met scholen en andersom.
+  </p>
+  <p>
+    Tijdens deze onderzoekende fase zoeken wij input van scholen, die ons kan helpen bij het geven
+    van de workshops. Er zijn veel ideeën voor workshops, en er is al veel lesmateriaal beschikbaar.
+  </p>
+</littil-container>
