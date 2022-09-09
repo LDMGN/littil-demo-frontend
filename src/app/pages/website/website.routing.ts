@@ -23,6 +23,6 @@ export const websiteRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'home',
   },
 ];

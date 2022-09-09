@@ -23,8 +23,7 @@
 >
   <littil-main-menu-button
     *ngFor="let route of menuRoutes"
-    [routerLink]="route.path"
-    routerLinkActive="active-link"
+    [path]="route.path"
     >{{ route.menuText }}</littil-main-menu-button
   >
 </littil-content-container>

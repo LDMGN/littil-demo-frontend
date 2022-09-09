@@ -3,8 +3,9 @@ import { createRoutingFactory } from '@ngneat/spectator/jest';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { ButtonComponent } from '../../components/button/button.component';
 import { ContentContainerComponent } from '../../components/content-container/content-container.component';
-import { ModalController } from '../../components/modal/modal.controller';
 import { LoginModalComponent } from '../../components/login-modal/login-modal.component';
+import { MainMenuButtonComponent } from '../../components/main-menu-button/main-menu-button.component';
+import { ModalController } from '../../components/modal/modal.controller';
 import { WebsiteComponent } from './website.component';
 
 describe('WebsiteComponent', () => {
@@ -18,6 +19,7 @@ describe('WebsiteComponent', () => {
       MockComponent(LoginModalComponent),
       MockComponent(ContentContainerComponent),
       MockComponent(ButtonComponent),
+      MockComponent(MainMenuButtonComponent),
     ],
     providers: [MockProvider(ModalController)],
   });
