@@ -20,9 +20,5 @@ const routes: Routes = [
     ContentContainerModule,
     RouterModule.forChild(routes),
   ],
-  providers: [],
-  exports: [AboutUsComponent],
-  entryComponents: [],
 })
-export class AboutUsModule {
-}
+export class AboutUsModule { }

@@ -27,6 +27,14 @@ export const websiteRoutes: Routes = [
         loadChildren: () =>
           import('./about-us/about-us.module').then((m) => m.AboutUsModule),
       },
+      {
+        path: 'info',
+        data: {
+          menuText: 'Informatie',
+        },
+        loadChildren: () =>
+          import('./information/information.module').then((m) => m.InformationModule),
+      },
     ],
   },
   {
