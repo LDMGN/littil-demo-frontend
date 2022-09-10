@@ -1,0 +1,60 @@
+<section class="-mt-6 mb-6 py-14 bg-blue-100">
+    <h1 class="font-bold text-5xl text-center text-white">Over ons</h1>
+</section>
+
+<littil-content-container outerClasses="mb-3">
+  <section>
+    <p class="mb-6">Project LITTIL is ontstaan uit een idee van Stichting Devoxx4Kids Nederland. Deze stichting heeft
+      meerdere
+      aanvragen van scholen gehad om een gastles te komen verzorgen.
+    </p>
+    <p class="mb-6">
+      Wij willen deze scholen graag helpen om een gast docent te vinden in hun omgeving die aansluit op hun wensen. Daarom
+      zijn wij gestart met 3 scrum teams en 60 vrijwilligers die hier onderzoek naar doen.
+    </p>
+
+    <h2 class="mb-2 font-bold text-3xl">Scrumteam Scholen</h2>
+    <p class="mb-6">Binnen Scrumteam Scholen is Hans Lieben Scrum Master. Hij zorgt ervoor dat zijn team informatie haalt
+      bij scholen
+      en docenten. Denk hierbij aan wat scholen nodig hebben om een match te vinden binnen onze lijst van
+      gastdocenten.
+    </p>
+
+    <h2 class="mb-2 font-bold text-3xl">Scrumteam Gastdocenten</h2>
+    <p class="mb-6">
+      Binnen Scrumteam Gastdocenten is Jasper Sprengers Scrum Master. Hij zorg ervoor dat zijn team informatie haalt bij
+      toekomstige gast docenten. Denk hierbij aan welke lessen zij willen geven en in welke regio.
+    </p>
+
+    <h2 class="mb-2 font-bold text-3xl">Scrumteam Marketing / Marktonderzoek</h2>
+    <p class="mb-6">
+      Binnen Scrumteam Markerting / Marktonderzoek is Eddy Vos Scrum Master. Hij zorgt ervoor dat zijn team onderzoek doet
+      naar mogelijke partners die dit platform kunnen versterken. Denk hierbij aan sponsors die hun bedrijfsnaam graag
+      willen koppelen aan dit initiatief. Of aan andere organisaties die lesmodules verzorgen maar geen docenten hebben.
+    </p>
+
+    <h2 class="mb-2 font-bold text-3xl">Alle hulp is welkom</h2>
+    <p class="mb-6">
+      Het streven is om in 2022 het platform te lanceren. Wanneer in 2022 is afhankelijk van de beschikbaarheid van onze
+      vrijwilligers. Mocht dit initiatief jouw interesse gewekt hebben en wil jij hieraan meehelpen, neem dan contact met
+      ons op via ons contactformulier!
+    </p>
+
+    <littil-button [inline]="true" (onClick)="navToContact()">Contact us</littil-button>
+  </section>
+
+  <section class="my-20">
+    <h2 class="mb-20 font-bold text-5xl text-center">Bestuur</h2>
+    <div class="grid grid-cols-12 gap-x-6 gap-y-4">
+      <div class="col-span-12 md:col-span-6 p-4 rounded-md bg-blue-100" *ngFor="let member of managementMock">
+        <div class="flex gap-x-4">
+          <img class="h-auto" src="assets/cropped-favicon-32x32.png" alt="Person image">
+          <div class="flex flex-col text-white">
+            <h3>{{member.name}}</h3>
+            <span>{{member.role}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</littil-content-container>

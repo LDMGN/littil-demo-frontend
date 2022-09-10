@@ -19,6 +19,14 @@ export const websiteRoutes: Routes = [
         loadChildren: () =>
           import('./homepage/homepage.module').then((m) => m.HomePageModule),
       },
+      {
+        path: 'about-us',
+        data: {
+          menuText: 'Over ons',
+        },
+        loadChildren: () =>
+          import('./about-us/about-us.module').then((m) => m.AboutUsModule),
+      },
     ],
   },
   {
