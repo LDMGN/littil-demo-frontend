@@ -33,7 +33,7 @@ export const websiteRoutes: Routes = [
           menuText: 'Informatie',
         },
         loadChildren: () =>
-          import('./information/information.module').then((m) => m.InformationModule),
+          import('./info/information.module').then((m) => m.InformationModule),
       },
     ],
   },
