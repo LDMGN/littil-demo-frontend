@@ -4,6 +4,7 @@ import {ContentContainerModule} from "../../../components/content-container/cont
 import {RouterModule, Routes} from "@angular/router";
 import {InformationComponent} from "./information/information.component";
 import {SchoolsComponent} from './schools/schools.component';
+import { SpecialistsComponent } from './specialists/specialists.component';
 
 const routes: Routes = [
   {
@@ -14,12 +15,17 @@ const routes: Routes = [
     path: 'schools',
     component: SchoolsComponent,
   },
+  {
+    path: 'it-specialists',
+    component: SpecialistsComponent,
+  },
 ];
 
 @NgModule({
   declarations: [
     InformationComponent,
-    SchoolsComponent
+    SchoolsComponent,
+    SpecialistsComponent
   ],
   imports: [
     CommonModule,
