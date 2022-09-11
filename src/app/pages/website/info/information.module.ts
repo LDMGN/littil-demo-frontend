@@ -5,6 +5,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {InformationComponent} from "./information/information.component";
 import {SchoolsComponent} from './schools/schools.component';
 import { SpecialistsComponent } from './specialists/specialists.component';
+import { SponsorsComponent } from './sponsors/sponsors.component';
 
 const routes: Routes = [
   {
@@ -19,13 +20,18 @@ const routes: Routes = [
     path: 'it-specialists',
     component: SpecialistsComponent,
   },
+  {
+    path: 'sponsors',
+    component: SponsorsComponent,
+  },
 ];
 
 @NgModule({
   declarations: [
     InformationComponent,
     SchoolsComponent,
-    SpecialistsComponent
+    SpecialistsComponent,
+    SponsorsComponent
   ],
   imports: [
     CommonModule,
