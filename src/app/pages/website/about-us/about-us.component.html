@@ -1,9 +1,9 @@
-<section class="-mt-6 mb-6 py-14 bg-blue-100">
+<div class="-mt-6 mb-6 py-14 bg-blue-100">
     <h1 class="text-center font-bold text-5xl text-white">Over ons</h1>
-</section>
+</div>
 
 <littil-content-container outerClasses="mb-3">
-  <section class="main-section">
+  <div class="content">
     <p>Project LITTIL is ontstaan uit een idee van Stichting Devoxx4Kids Nederland. Deze stichting heeft
       meerdere
       aanvragen van scholen gehad om een gastles te komen verzorgen.
@@ -41,9 +41,9 @@
     </p>
 
     <littil-button [inline]="true" (onClick)="navToContact()">Contact us</littil-button>
-  </section>
+  </div>
 
-  <section class="my-20">
+  <div class="my-20">
     <h2 class="mb-20 font-bold text-5xl text-center">Bestuur</h2>
     <div class="grid grid-cols-12 gap-x-6 gap-y-4">
       <div class="col-span-12 md:col-span-6 p-4 rounded-md bg-blue-100" *ngFor="let member of managementMock">
@@ -56,5 +56,5 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </littil-content-container>
