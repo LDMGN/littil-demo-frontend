@@ -21,10 +21,16 @@
   outerClasses="bg-yellow-100 mb-6"
   innerClasses="text-white uppercase flex"
 >
-  <littil-main-menu-button
-    *ngFor="let route of menuRoutes"
-    [path]="route.path"
+  <ng-container *ngFor="let route of menuRoutes">
+    <littil-main-menu-button
+      *ngIf="!route.multiRoute"
+      [path]="route.path"
     >{{ route.menuText }}</littil-main-menu-button
-  >
+    >
+      <littil-main-menu-dropdown-button
+        *ngIf="route.multiRoute"
+        [path]="route.path"
+      >{{ route.menuText }}</littil-main-menu-dropdown-button>
+  </ng-container>
 </littil-content-container>
 <router-outlet></router-outlet>

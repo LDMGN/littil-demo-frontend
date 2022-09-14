@@ -5,6 +5,5 @@ import { Component, Input } from '@angular/core';
   templateUrl: './main-menu-button.component.html',
 })
 export class MainMenuButtonComponent {
-  @Input()
-  public path?: string;
+  @Input() path?: string;
 }

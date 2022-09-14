@@ -19,6 +19,7 @@ export class WebsiteComponent {
     {
       path: '/info',
       menuText: 'Informatie',
+      multiRoute: true,
     },
     {
       path: '/blog',
