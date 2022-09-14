@@ -1,9 +1,10 @@
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {ContentContainerModule} from '../../../components/content-container/content-container.module';
-import {AboutUsComponent} from "./about-us.component";
-import {ButtonModule} from "../../../components/button/button.module";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ContentContainerModule } from '../../../components/content-container/content-container.module';
+import { AboutUsComponent } from "./about-us.component";
+import { ButtonModule } from "../../../components/button/button.module";
+import { TitleModule } from "../../../components/title/title.module";
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
     ButtonModule,
     CommonModule,
     ContentContainerModule,
+    TitleModule,
     RouterModule.forChild(routes),
   ],
 })
