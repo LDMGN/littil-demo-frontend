@@ -19,7 +19,20 @@ export class WebsiteComponent {
     {
       path: '/info',
       menuText: 'Informatie',
-      multiRoute: true,
+      subRoutes: [
+        {
+          path: '/info/schools',
+          menuText: 'Scholen',
+        },
+        {
+          path: '/info/specialists',
+          menuText: 'IT Specialisten',
+        },
+        {
+          path: '/info/sponsors',
+          menuText: 'Sponsors',
+        },
+      ],
     },
     {
       path: '/blog',

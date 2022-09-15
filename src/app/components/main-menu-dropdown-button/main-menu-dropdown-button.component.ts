@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
 })
 export class MainMenuDropdownButtonComponent {
   @Input() path?: string;
-
+  @Input() subRoutes?: {path: string, menuText: string}[];
 }

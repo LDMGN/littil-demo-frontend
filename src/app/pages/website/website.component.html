@@ -23,13 +23,14 @@
 >
   <ng-container *ngFor="let route of menuRoutes">
     <littil-main-menu-button
-      *ngIf="!route.multiRoute"
+      *ngIf="!route.subRoutes"
       [path]="route.path"
     >{{ route.menuText }}</littil-main-menu-button
     >
       <littil-main-menu-dropdown-button
-        *ngIf="route.multiRoute"
+        *ngIf="route.subRoutes"
         [path]="route.path"
+        [subRoutes]="route.subRoutes"
       >{{ route.menuText }}</littil-main-menu-dropdown-button>
   </ng-container>
 </littil-content-container>
