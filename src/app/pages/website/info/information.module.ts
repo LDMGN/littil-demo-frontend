@@ -6,6 +6,7 @@ import {InformationComponent} from "./information/information.component";
 import {SchoolsComponent} from './schools/schools.component';
 import { SpecialistsComponent } from './specialists/specialists.component';
 import { SponsorsComponent } from './sponsors/sponsors.component';
+import { TitleModule } from "../../../components/title/title.module";
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
     CommonModule,
     ContentContainerModule,
     RouterModule.forChild(routes),
+    TitleModule,
   ]
 })
 export class InformationModule { }
