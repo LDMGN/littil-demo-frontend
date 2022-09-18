@@ -13,9 +13,9 @@
     </a>
   </div>
   <!-- Dropdown list -->
-  <div class="absolute left-0 right-0 hidden transition-colors bg-yellow-100 group-hover:block">
+  <div class="absolute left-0 right-0 transition-colors bg-yellow-100 hidden group-hover:block">
     <a *ngFor="let route of subRoutes"
-      class="flex items-center gap-x-1 px-10 py-5 cursor-pointer hover:bg-yellow-50"
+      class="flex px-10 py-5 cursor-pointer hover:bg-yellow-50"
       [routerLink]="route.path"
       routerLinkActive="bg-yellow-50"
       >

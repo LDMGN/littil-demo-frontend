@@ -25,7 +25,7 @@ export class WebsiteComponent {
           menuText: 'Scholen',
         },
         {
-          path: '/info/specialists',
+          path: '/info/it-specialists',
           menuText: 'IT Specialisten',
         },
         {
