@@ -19,6 +19,20 @@ export class WebsiteComponent {
     {
       path: '/info',
       menuText: 'Informatie',
+      subRoutes: [
+        {
+          path: '/info/schools',
+          menuText: 'Scholen',
+        },
+        {
+          path: '/info/it-specialists',
+          menuText: 'IT Specialisten',
+        },
+        {
+          path: '/info/sponsors',
+          menuText: 'Sponsors',
+        },
+      ],
     },
     {
       path: '/blog',

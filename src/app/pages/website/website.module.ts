@@ -7,17 +7,21 @@ import { MainMenuButtonModule } from '../../components/main-menu-button/main-men
 import { LoginModalModule } from '../../components/login-modal/login-modal.module';
 import { WebsiteComponent } from './website.component';
 import { websiteRoutes } from './website.routing';
+import {
+    MainMenuDropdownButtonModule
+} from "../../components/main-menu-dropdown-button/main-menu-dropdown-button.module";
 
 @NgModule({
   declarations: [WebsiteComponent],
-  imports: [
-    CommonModule,
-    ContentContainerModule,
-    ButtonModule,
-    LoginModalModule,
-    MainMenuButtonModule,
-    RouterModule.forChild(websiteRoutes),
-  ],
+    imports: [
+        CommonModule,
+        ContentContainerModule,
+        ButtonModule,
+        LoginModalModule,
+        MainMenuButtonModule,
+        MainMenuDropdownButtonModule,
+        RouterModule.forChild(websiteRoutes),
+    ],
   providers: [],
   exports: [RouterModule],
   entryComponents: [],
