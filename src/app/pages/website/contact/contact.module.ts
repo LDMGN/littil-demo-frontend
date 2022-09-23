@@ -4,6 +4,9 @@ import { ContactComponent } from './contact.component';
 import { RouterModule, Routes } from "@angular/router";
 import { ContentContainerModule } from "../../../components/content-container/content-container.module";
 import { TitleModule } from "../../../components/title/title.module";
+import { FormInputTextModule } from "../../../components/forms/text-input/form-input-text.module";
+import { ReactiveFormsModule } from "@angular/forms";
+import { ButtonModule } from "../../../components/button/button.module";
 
 const routes: Routes = [
   {
@@ -15,10 +18,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [ContactComponent],
   imports: [
+    ButtonModule,
     CommonModule,
     ContentContainerModule,
-    TitleModule,
+    FormInputTextModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
+    TitleModule,
   ]
 })
-export class ContactModule { }
+export class ContactModule {
+}

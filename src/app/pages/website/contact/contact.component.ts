@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'littil-contact',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  contactForm?: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+  ) {}
 
   ngOnInit(): void {
+   this.createContactForm();
   }
 
+  createContactForm(): void {
+    this.contactForm = this.contactForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      subject: ['', [Validators.required]],
+      role: ['', [Validators.required]],
+      message: [''],
+    });
+  }
+
+  postForm(): void {
+    console.log(this.contactForm)
+  }
 }

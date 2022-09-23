@@ -13,23 +13,31 @@
     </div>
 
     <div class="col-span-12 md:col-span-6">
-      <div class="flex flex-col">
-        <label class="text-white">Je naam</label>
-        <input type="text" class="mb-4">
+      <ng-container *ngIf="contactForm">
+        <form class="flex flex-col" [formGroup]="contactForm">
+          <littil-form-input-text formControlName="name" [placeholder]="'Je naam'">
+          </littil-form-input-text>
 
-        <label class="text-white">Je e-mailadres</label>
-        <input type="email" class="mb-4">
+          <littil-form-input-text formControlName="email" [placeholder]="'Je e-mailadres'">
+          </littil-form-input-text>
 
-        <label class="text-white">Onderwerp</label>
-        <input type="text" class="mb-4">
+          <littil-form-input-text formControlName="subject" [placeholder]="'Onderwerp'">
+          </littil-form-input-text>
 
-        <label class="text-white">Mijn rol (optioneel)</label>
-        <input type="text" class="mb-4">
+          <littil-form-input-text formControlName="role" [placeholder]="'Mijn rol (optioneel)'">
+          </littil-form-input-text>
 
-        <label class="text-white">Je bericht (optioneel)</label>
-          <textarea name="" id="" cols="30" rows="8"></textarea>
-      </div>
+          <textarea cols="30" rows="8"
+                    placeholder="Je bericht (optioneel)"
+                    formControlName="message"
+                    [ngClass]="'border-yellow-100 focus:border-yellow-200 placeholder:text-yellow-100 focus:ring-yellow-200'"
+                    class="appearance-none border rounded w-full py-2 px-3 mb-2 text-gray-700 placeholder:text-sm leading-tight ring-0 focus:ring-2 focus:ring-opacity-40">
+          </textarea>
+
+          <littil-button [inline]="true" (onClick)="postForm()">Verzenden</littil-button>
+        </form>
+      </ng-container>
     </div>
-  </div>
 
+  </div>
 </littil-content-container>
