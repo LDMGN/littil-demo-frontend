@@ -23,12 +23,16 @@ export class ContactComponent implements OnInit {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       subject: ['', [Validators.required]],
-      role: ['', [Validators.required]],
+      role: [''],
       message: [''],
     });
   }
 
   postForm(): void {
-    console.log(this.contactForm)
+    if(this.contactForm?.valid) {
+      console.log(this.contactForm)
+    } else {
+      //TODO:: Error handling
+    }
   }
 }
