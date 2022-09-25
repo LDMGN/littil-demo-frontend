@@ -7,6 +7,7 @@ import { TitleModule } from "../../../components/title/title.module";
 import { FormInputTextModule } from "../../../components/forms/text-input/form-input-text.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ButtonModule } from "../../../components/button/button.module";
+import { FormInputSelectModule } from "../../../components/forms/select-input/form-input-select.module";
 
 const routes: Routes = [
   {
@@ -17,15 +18,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [ContactComponent],
-  imports: [
-    ButtonModule,
-    CommonModule,
-    ContentContainerModule,
-    FormInputTextModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    TitleModule,
-  ]
+    imports: [
+        ButtonModule,
+        CommonModule,
+        ContentContainerModule,
+        FormInputSelectModule,
+        FormInputTextModule,
+        ReactiveFormsModule,
+        RouterModule.forChild(routes),
+        TitleModule,
+    ]
 })
 export class ContactModule {
 }
