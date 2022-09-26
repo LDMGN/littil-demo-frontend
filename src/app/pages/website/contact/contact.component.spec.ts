@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ContactComponent } from './contact.component';
+import { ReactiveFormsModule } from "@angular/forms";
+import { FormBaseComponent } from "../../../components/forms/form-base";
+import { FormInputTextComponent } from "../../../components/forms/text-input/form-input-text.component";
+import { FormInputSelectComponent } from "../../../components/forms/select-input/form-input-select.component";
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -8,7 +11,8 @@ describe('ContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContactComponent ]
+      imports: [ ReactiveFormsModule ],
+      declarations: [ ContactComponent, FormBaseComponent, FormInputTextComponent, FormInputSelectComponent ]
     })
     .compileComponents();
 
