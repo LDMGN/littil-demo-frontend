@@ -1,13 +1,10 @@
 {
-  "name": "littil-org-website",
+  "name": "littil-org-demo",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "jest",
-    "openapi": "openapi-generator-cli generate -i ./openapi.json -g typescript-angular -o src/app/api/generated --skip-validate-spec"
+    "test": "jest"
   },
   "private": true,
   "dependencies": {
@@ -31,7 +28,6 @@
     "@angular/cli": "~14.2.1",
     "@angular/compiler-cli": "~14.2.0",
     "@ngneat/spectator": "^11.1.3",
-    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@tailwindcss/forms": "^0.5.3",
     "@types/jest": "^29.0.0",
     "@types/node": "^18.7.15",
