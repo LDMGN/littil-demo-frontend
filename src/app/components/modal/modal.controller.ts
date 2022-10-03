@@ -24,7 +24,7 @@ export class ModalController {
       });
       const dialogConfig = new MatDialogConfig();
       dialogConfig.closeOnNavigation = true;
-      dialogConfig.minWidth = '50%';
+      dialogConfig.width = '400px';
       dialogConfig.minHeight = '50vh';
 
       const matDialogRef = this.dialog.open(component, dialogConfig);

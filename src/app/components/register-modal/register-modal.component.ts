@@ -7,13 +7,12 @@ import {
 } from '@angular/animations';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IModalComponent } from '../modal/modal.controller';
 import { FormUtil } from '../../utils/form.util';
-import { DemoController } from '../../demo.controller';
+import { IModalComponent } from '../modal/modal.controller';
 
 @Component({
-  selector: 'littil-login-modal',
-  templateUrl: 'login-modal.component.html',
+  selector: 'littil-register-modal',
+  templateUrl: 'register-modal.component.html',
   animations: [
     trigger('hideShow', [
       state(
@@ -32,30 +31,23 @@ import { DemoController } from '../../demo.controller';
     ]),
   ],
 })
-export class LoginModalComponent
+export class RegisterModalComponent
   implements IModalComponent<undefined, undefined>
 {
   close!: () => undefined;
   public loading = false;
   FormUtil = FormUtil;
 
-  loginForm: FormGroup = new FormGroup({
-    email: new FormControl(this.demoController.demoEmail, Validators.required),
-    password: new FormControl(
-      this.demoController.demoPassword,
-      Validators.required
-    ),
+  registerForm: FormGroup = new FormGroup({
+    email: new FormControl('eddy.vos@littil.org', Validators.required),
   });
 
-  constructor(public demoController: DemoController) {}
-
-  public onClickLogin(): Promise<any> {
+  public onClickRegister(): Promise<any> {
     return Promise.resolve().then(() => {
-      FormUtil.ValidateAll(this.loginForm);
-      if (this.loginForm.invalid) {
+      FormUtil.ValidateAll(this.registerForm);
+      if (this.registerForm.invalid) {
         return false;
       }
-      this.demoController.loggedIn = true;
       return this.close();
     });
   }

@@ -1,1 +1,31 @@
+<littil-content-container
+  [outerClasses]="'bg-blue-50 p-4 flex'"
+  [innerClasses]="'flex justify-between'"
+>
+  <div>
+    <img src="assets/littil_logo.png" class="h-12" alt="LITTIL logo" />
+  </div>
+  <div>
+    <div *ngIf="demoController.loggedIn" class="profile flex items-center">
+      <div class="mr-3">Welkom {{ demoController.demoName }}</div>
+      <littil-button [inline]="true" data-test="logout-btn" (click)="logOut()"
+        >Uitloggen
+      </littil-button>
+    </div>
+    <littil-button
+      *ngIf="!demoController.loggedIn"
+      [inline]="true"
+      data-test="register-btn"
+      (click)="openRegisterModal()"
+      >Registeren</littil-button
+    >
+    <littil-button
+      *ngIf="!demoController.loggedIn"
+      [inline]="true"
+      data-test="login-btn"
+      (click)="openLoginModal()"
+      >Inloggen
+    </littil-button>
+  </div>
+</littil-content-container>
 <router-outlet></router-outlet>

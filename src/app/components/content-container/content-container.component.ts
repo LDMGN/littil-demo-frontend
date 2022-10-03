@@ -12,5 +12,5 @@ export class ContentContainerComponent {
   public innerClasses = '';
 
   @Input()
-  public widthClass = 'max-w-screen-lg';
+  public widthClass = 'max-w-4xl';
 }
