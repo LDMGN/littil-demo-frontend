@@ -1,8 +1,25 @@
-<google-map
-  height="90%"
-  width="100%"
-  [center]="center"
-  [zoom]="zoom"
-  [options]="mapOptions"
->
-</google-map>
+<div class="relative w-full h-full">
+  <div
+    class="absolute left-0 top-0 w-3/12 h-full z-[2] bg-blue-50 p-4 drop-shadow-md"
+  >
+    <ng-container *ngIf="selectedMarker">
+      <h2 class="text-yellow-200 text-xl">{{ selectedMarker.name }}</h2>
+      <p>Gastdocent</p>
+    </ng-container>
+  </div>
+  <google-map
+    height="92%"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+    [options]="mapOptions"
+  >
+    <map-marker [options]="ownLocation.options"></map-marker>
+    <ng-container *ngFor="let marker of mapData">
+      <map-marker
+        [options]="marker.options"
+        (mapClick)="onMarkerClick(marker)"
+      ></map-marker>
+    </ng-container>
+  </google-map>
+</div>

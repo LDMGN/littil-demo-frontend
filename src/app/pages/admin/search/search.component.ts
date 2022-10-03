@@ -1,15 +1,49 @@
 import { Component } from '@angular/core';
+import {
+  IMapData,
+  MAP_DATA_MOCK,
+} from '../../../utils/mock-data/map-data.mock';
 
 @Component({
   selector: 'littil-search',
   templateUrl: './search.component.html',
 })
 export class SearchComponent {
+  public selectedMarker!: any;
+  public mapData: any[] = MAP_DATA_MOCK.map((data: IMapData) => {
+    return {
+      ...data,
+      options: {
+        position: {
+          lat: data.lat,
+          lng: data.lng,
+        },
+        visible: true,
+        icon: {
+          size: { width: 25, height: 25 },
+          url: 'assets/marker.svg',
+        } as google.maps.Icon,
+      },
+    };
+  });
+  public ownLocation: any = {
+    options: {
+      position: {
+        lat: 52.0989904,
+        lng: 5.1135757,
+      },
+      visible: true,
+      icon: {
+        size: { width: 25, height: 25 },
+        url: 'assets/user-location.svg',
+      } as google.maps.Icon,
+    },
+  };
   public center: google.maps.LatLngLiteral = {
-    lat: 52.0888900756836,
-    lng: 5.11027765274048,
+    lat: 52.098191,
+    lng: 5.111859,
   } as google.maps.LatLngLiteral;
-  public zoom: number | MapZoomLevels = MapZoomLevels.WHOLE_NL;
+  public zoom: number | MapZoomLevels = MapZoomLevels.LOCATION_FOCUS;
   public mapOptions: google.maps.MapOptions = {
     zoomControl: true,
     scrollwheel: true,
@@ -91,6 +125,10 @@ export class SearchComponent {
       },
     ],
   };
+
+  public onMarkerClick(marker: IMapData) {
+    this.selectedMarker = marker;
+  }
 }
 
 export enum MapZoomLevels {
