@@ -8,6 +8,6 @@ export class DemoController {
   public loggedIn = false;
 
   public demoName = 'Eddy Vos';
-  public demoEmail = 'eddy.vos@littil.org';
+  public demoEmail = 'eddy.vos@email.com';
   public demoPassword = 'ditisgeenechtwachtwoord';
 }
