@@ -5,6 +5,16 @@
     <ng-container *ngIf="selectedMarker">
       <h2 class="text-yellow-200 text-xl">{{ selectedMarker.name }}</h2>
       <p>Gastdocent</p>
+      <ng-container
+        *ngIf="selectedMarker.modules && selectedMarker.modules.length > 0"
+      >
+        <h2 class="text-yellow-200 text-xl">Geeft les in modules:</h2>
+        <ul>
+          <li *ngFor="let module of selectedMarker.modules">
+            {{ module }}
+          </li>
+        </ul>
+      </ng-container>
     </ng-container>
   </div>
   <google-map
@@ -14,7 +24,10 @@
     [zoom]="zoom"
     [options]="mapOptions"
   >
-    <map-marker [options]="ownLocation.options"></map-marker>
+    <map-marker
+      [options]="ownLocation.options"
+      (mapClick)="onMarkerClick(ownLocation)"
+    ></map-marker>
     <ng-container *ngFor="let marker of mapData">
       <map-marker
         [options]="marker.options"

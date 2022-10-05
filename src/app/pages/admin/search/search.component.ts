@@ -10,9 +10,20 @@ import {
 })
 export class SearchComponent {
   public selectedMarker!: any;
+  public teachedModules: any = {
+    modules: [
+      'Scratch',
+      'CodeCombat',
+      " MBot's",
+      'Lego MindStorm',
+      'Lego WeDo',
+      'HedyCode',
+    ],
+  };
   public mapData: any[] = MAP_DATA_MOCK.map((data: IMapData) => {
     return {
       ...data,
+      ...this.teachedModules,
       options: {
         position: {
           lat: data.lat,
@@ -27,6 +38,7 @@ export class SearchComponent {
     };
   });
   public ownLocation: any = {
+    name: 'Eddy Vos',
     options: {
       position: {
         lat: 52.0989904,
