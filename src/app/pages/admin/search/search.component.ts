@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  IMapData,
-  MAP_DATA_MOCK,
-} from '../../../utils/mock-data/map-data.mock';
+import { IMapData, MAP_DATA_MOCK, } from '../../../utils/mock-data/map-data.mock';
 
 @Component({
   selector: 'littil-search',
@@ -10,20 +7,9 @@ import {
 })
 export class SearchComponent {
   public selectedMarker!: any;
-  public teachedModules: any = {
-    modules: [
-      'Scratch',
-      'CodeCombat',
-      " MBot's",
-      'Lego MindStorm',
-      'Lego WeDo',
-      'HedyCode',
-    ],
-  };
   public mapData: any[] = MAP_DATA_MOCK.map((data: IMapData) => {
     return {
       ...data,
-      ...this.teachedModules,
       options: {
         position: {
           lat: data.lat,
@@ -31,7 +17,7 @@ export class SearchComponent {
         },
         visible: true,
         icon: {
-          size: { width: 25, height: 25 },
+          size: {width: 25, height: 25},
           url: 'assets/marker.svg',
         } as google.maps.Icon,
       },
@@ -46,7 +32,7 @@ export class SearchComponent {
       },
       visible: true,
       icon: {
-        size: { width: 25, height: 25 },
+        size: {width: 25, height: 25},
         url: 'assets/user-location.svg',
       } as google.maps.Icon,
     },
