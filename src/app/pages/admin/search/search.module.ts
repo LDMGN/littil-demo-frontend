@@ -4,6 +4,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { RouterModule, Routes } from '@angular/router';
 import { ContentContainerModule } from '../../../components/content-container/content-container.module';
 import { SearchComponent } from './search.component';
+import { ButtonModule } from "../../../components/button/button.module";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 const routes: Routes = [
   {
@@ -19,6 +21,8 @@ const routes: Routes = [
     GoogleMapsModule,
     ContentContainerModule,
     RouterModule.forChild(routes),
+    ButtonModule,
+    MatCheckboxModule,
   ],
   providers: [],
   exports: [SearchComponent],

@@ -7,6 +7,7 @@ import {SchoolsComponent} from './schools/schools.component';
 import { SpecialistsComponent } from './specialists/specialists.component';
 import { SponsorsComponent } from './sponsors/sponsors.component';
 import { TitleModule } from "../../../components/title/title.module";
+import { ModulesComponent } from "./modules/modules.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
     path: 'sponsors',
     component: SponsorsComponent,
   },
+  {
+    path: 'modules',
+    component: ModulesComponent,
+  },
 ];
 
 @NgModule({
@@ -32,7 +37,8 @@ const routes: Routes = [
     InformationComponent,
     SchoolsComponent,
     SpecialistsComponent,
-    SponsorsComponent
+    SponsorsComponent,
+    ModulesComponent,
   ],
   imports: [
     CommonModule,

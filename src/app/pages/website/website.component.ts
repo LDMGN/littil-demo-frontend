@@ -44,6 +44,10 @@ export class WebsiteComponent implements OnInit {
             path: '/info/sponsors',
             menuText: 'Sponsors',
           },
+          {
+            path: '/info/modules',
+            menuText: 'Modules',
+          },
         ],
       },
       ...(
