@@ -22,12 +22,12 @@ export class AppComponent {
 
   public openLoginModal() {
     return this.modalController.present(LoginModalComponent).then(() => {
-      this.router.navigateByUrl('/admin/search');
+      this.router.navigateByUrl('/search');
     });
   }
 
   public logOut(): void {
-    this.demoController.loggedIn = false;
+    this.demoController.logOut();
     this.router.navigateByUrl('/home');
   }
 }

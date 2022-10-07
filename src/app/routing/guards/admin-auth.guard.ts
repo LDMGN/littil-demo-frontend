@@ -9,7 +9,7 @@ export class AdminAuthGuard implements CanActivate {
   constructor(private router: Router, private demoController: DemoController) {}
 
   public canActivate() {
-    if (this.demoController.loggedIn) {
+    if (this.demoController.isLoggedIn) {
       return true;
     } else {
       return this.router.parseUrl('/');

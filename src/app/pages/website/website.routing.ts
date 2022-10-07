@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { WebsiteComponent } from './website.component';
+import { AdminAuthGuard } from "../../routing/guards/admin-auth.guard";
 
 export const websiteRoutes: Routes = [
   {
@@ -50,6 +51,15 @@ export const websiteRoutes: Routes = [
         },
         loadChildren: () =>
           import('./contact/contact.module').then((m) => m.ContactModule),
+      },
+      {
+        path: 'search',
+        data: {
+          menuText: 'Search',
+        },
+        loadChildren: () =>
+          import('../admin/search/search.module').then((m) => m.SearchPageModule),
+        canActivate: [AdminAuthGuard],
       },
     ],
   },

@@ -55,7 +55,7 @@ export class LoginModalComponent
       if (this.loginForm.invalid) {
         return false;
       }
-      this.demoController.loggedIn = true;
+      this.demoController.logIn();
       return this.close();
     });
   }

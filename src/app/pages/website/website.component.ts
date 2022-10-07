@@ -1,15 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DemoController } from '../../demo.controller';
 
 @Component({
   selector: 'littil-website',
   templateUrl: './website.component.html',
 })
-export class WebsiteComponent {
-  public menuRoutes;
+export class WebsiteComponent implements OnInit {
+  public menuRoutes: any[];
 
   constructor(public demoController: DemoController) {
-    this.menuRoutes = [
+    this.menuRoutes = this.getMenuItems(false);
+  }
+
+  public ngOnInit(): void {
+    this.demoController.loggedInStatus.subscribe({
+      next: (isLoggedIn) => this.menuRoutes = this.getMenuItems(isLoggedIn),
+    })
+  }
+
+  private getMenuItems(isLoggedIn: boolean): any[] {
+    return [
       {
         path: '/home',
         menuText: 'Home',
@@ -37,21 +47,17 @@ export class WebsiteComponent {
         ],
       },
       ...(
-        demoController.loggedIn
+        isLoggedIn
           ?
           [
             {
               path: '/search',
-              menuText: 'IT Specialisten',
+              menuText: 'Zoeken',
             },
           ]
           :
           []
       ),
-      {
-        path: '/blog',
-        menuText: 'Blog',
-      },
       {
         path: '/contact',
         menuText: 'Contact',
